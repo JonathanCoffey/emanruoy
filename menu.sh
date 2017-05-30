@@ -3,15 +3,15 @@
 clear
 PS3='Please select an option: '
 echo
-echo "GLaDOS - I'm bringing the cake..."
+echo "Main Menu"
 echo
 echo
-options=("autoSSH" "autoSMB" "autoSSH/SMB" "Quit")
+options=("init LServer" "autoSMB" "autoSSH/SMB" "Quit")
 select opt in "${options[@]}"
 do 
    case $opt in
-        "autoSSH")
-            ./autoSSH.sh
+        "init LServer")
+            echo "echo in dev"
             ;;
         "autoSMB")
             ./autoSMB.sh
