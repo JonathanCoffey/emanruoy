@@ -1,0 +1,1 @@
+while (sleep 10); do clear && ./Files/batt/batlife0 | grep percentage && ./Files/batt/batlife1 | grep percentage;done
