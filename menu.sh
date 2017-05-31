@@ -6,15 +6,15 @@ echo
 echo "Main Menu"
 echo
 echo
-options=("init LServer" "autoSMB" "autoSSH/SMB" "Quit")
+options=("static IP" "software Update" "autoSSH/SMB" "Quit")
 select opt in "${options[@]}"
 do 
    case $opt in
-        "init LServer")
-            echo "echo in dev"
+        "static IP")
+            ./files/staticIP.sh
             ;;
-        "autoSMB")
-            ./autoSMB.sh
+        "software Update")
+            echo "in dev"
 	    ;;
         "autoSSH/SMB")
             ./autoSSH.sh
