@@ -4,7 +4,7 @@
 #!/bin/bash
 
 # this will simplify the ethernet adapter name.
-eth0=$(ifconfig | grep -i "ethernet" | awk '{print $1}')
+eth0=$(ifconfig | grep -i "ethernet" | awk 'NR==1{print $1}')
 
 # output the new value of variable $eth0
 echo $eth0
