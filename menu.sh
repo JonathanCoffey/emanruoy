@@ -38,15 +38,32 @@ if [ ! "${TMUX}" ]; then
     exit
   fi
 else
-  clear
-  echo "detaching from tmux in: 3"
-  sleep 1
-  clear
-  echo "detaching from tmux in: 2"
-  sleep 1
-  clear
-  echo "detaching from tmux in: 1"
-  sleep 1
-  clear
-  tmux detach
+  read -p 'You are already attached to tmux. Do you wish to detach? Y/n ' input1
+
+  if [ "${input1}" = "y" ]; then
+    clear
+    echo "detaching from tmux in: 3"
+    sleep 1
+    clear
+    echo "detaching from tmux in: 2"
+    sleep 1
+    clear
+    echo "detaching from tmux in: 1"
+    sleep 1
+    clear
+    tmux detach
+  elif [ "${input1}" = "n" ]; then
+    clear
+    echo "Okay, you can stay here."
+    sleep 2
+    clear
+    exit 
+  elif [ "${input1}" = "" ]; then
+    clear
+    echo "Please enter y or n"
+    echo "Re-run script again."
+    sleep 2
+    clear
+    exit
+  fi
 fi
