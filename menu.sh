@@ -64,6 +64,10 @@ else
     echo "Re-run script again."
     sleep 2
     clear
-    exit
+  else
+    clear
+    echo "Invalid option, please enter 'y' or 'n'"
+    sleep 2
+    clear
   fi
 fi
