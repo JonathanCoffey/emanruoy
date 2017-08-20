@@ -3,10 +3,12 @@
 # Find min and max ID values.
 
 # Find all directories 3 levels deep in Customer logs.
-y=$(find ~/2TB/GCC/Files/CustomerLogs/ -maxdepth 3 -type d)
+# Note that this path is for hwy90 server and GCC location.
+#y=$(find ~/2TB/GCC/Files/CustomerLogs/ -maxdepth 3 -type d)
+y=$(find ~/GCC/Files/CustomerLogs/ -maxdepth 3 -type d)
 
-# Filter those directories for ones that have 'ID' and exclude dataBackup dirs. 
-z=$(echo "${y}" | grep "ID" | grep -v "dataBackup" | cut -d '/' -f 9)
+# Filter those directories for ones that have 'ID' and exclude dataBackup dirs.
+z=$(echo "${y}" | grep "ID" | grep -v "dataBackup" | cut -d '/' -f 8) # field 9 on hwy90 server
 
 # This trims off 'ID' from the numbers. 
 x=$(echo "${z}" | cut -d 'D' -f 2)
