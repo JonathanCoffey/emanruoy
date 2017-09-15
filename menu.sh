@@ -4,36 +4,40 @@
 clear
 
 # Declare Variables
-ID=$(id -u)
-mainSTATUS=$(tmux ls 2>/dev/null | grep "Main" >/dev/null; echo $?) # tmux Main session already running? true or false.
-mainATTACHED=$(tmux ls 2>/dev/null | grep "Main" | grep -i "attached" >/dev/null; echo $?)
+read -p 'Please enter a session name: ' sessionName # Asks user to name a tmux session, stores it in sessionName.
+status=$(tmux ls 2>/dev/null | grep "${sessionName}" >/dev/null; echo $?) # checks if sessionName already running. 0 if yes, 1 if not.
+#mainSTATUS=$(tmux ls 2>/dev/null | grep ""${sessionName}"" >/dev/null; echo $?) # tmux "${sessionName}" session already running? true or false. # disabled for now, not forcing ""${sessionName}"" as name.
+#mainATTACHED=$(tmux ls 2>/dev/null | grep ""${sessionName}"" | grep -i "attached" >/dev/null; echo $?)
+
 
 # check if sudo. I left this here so that you can soure the script variables and stop the script here.
 #[ "$ID" -ne 0 ] && echo "This should be run as root." && sleep 2 && exit
+# I disabled the sudo check, as you may want to run as any user without forcing you to run as root. 
+# For the sake of automation, run as root. For security, run normally and use password when prompted for tools that # require root privs. 
 
 
-if [ ! "${TMUX}" ]; then
-  if [ "${mainSTATUS}" = 0 ]; then
-    echo "TMUX SERVER: Main: UP."
+if [ ! "${TMUX}" ]; then # TMUX variable only exists in tmux. The test is saying: if not true, then... but if it is true, then this is false and goes to ELSE. 
+  if [ "${status}" = 0 ]; then # if 0, then the chosen tmux session is already up.
+    echo "TMUX SERVER: "${sessionName}": UP."
     sleep 1
     clear
-    if [ "${mainATTACHED}" = 0 ]; then
-      echo "TMUX SERVER: Main: DETACHING CLIENTS."
+    if [ "${status}" = 0 ]; then
+      echo "TMUX SERVER: "${sessionName}": DETACHING CLIENTS."
       sleep 1
-      tmux detach -s Main
-      tmux a -t Main
+      tmux detach -s "${sessionName}"
+      tmux a -t "${sessionName}"
       clear
     else
-      echo "TMUX SERVER: Main: ATTACHING TO SERVER."
+      echo "TMUX SERVER: "${sessionName}": ATTACHING TO SERVER."
       sleep 1
-      tmux a -t Main
+      tmux a -t "${sessionName}"
       clear
       exit
     fi
   else
-    echo "TMUX SERVER: Main: STARTING."
+    echo "TMUX SERVER: "${sessionName}": STARTING."
     sleep 1
-    tmux new-session -s Main
+    tmux new-session -s "${sessionName}"
     clear
     exit
   fi
