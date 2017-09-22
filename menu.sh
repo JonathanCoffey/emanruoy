@@ -50,7 +50,6 @@ if [ ! "${TMUX}" ]; then # TMUX variable only exists in tmux. The test is saying
   fi
 else
   read -p 'You are already attached to tmux. Do you wish to detach? Y/n ' input1
-
   if [ "${input1}" = "y" ]; then
     clear
     echo "detaching from tmux in: 3"
