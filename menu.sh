@@ -3,10 +3,17 @@
 # A fresh start.
 clear
 
+# list already running tmux sessions
+echo "CURRENTLY RUNNING SESSIONS"
+echo '-------------------------------'
+tmux ls
+echo '-------------------------------'
+
 # Declare Variables
-read -p 'Please enter a session name: ' sessionName # Asks user to name a tmux session, stores it in sessionName.
+read -p 'Type a running session name to attach, or type a unique name to create a new session: ' sessionName # Asks user to name a tmux session, stores it in sessionName.
 status=$(tmux ls 2>/dev/null | grep "${sessionName}" >/dev/null; echo $?) # checks if sessionName already running. 0 if yes, 1 if not.
-#mainSTATUS=$(tmux ls 2>/dev/null | grep ""${sessionName}"" >/dev/null; echo $?) # tmux "${sessionName}" session already running? true or false. # disabled for now, not forcing ""${sessionName}"" as name.
+#mainSTATUS=$(tmux ls 2>/dev/null | grep ""${sessionName}"" >/dev/null; echo $?) # tmux "${sessionName}" session already running? true or false. 
+# disabled for now, not forcing "Main" as name.
 #mainATTACHED=$(tmux ls 2>/dev/null | grep ""${sessionName}"" | grep -i "attached" >/dev/null; echo $?)
 
 
@@ -55,7 +62,7 @@ else
     echo "detaching from tmux in: 1"
     sleep 1
     clear
-    tmux detach
+    tmux new-session -d -s "${sessionName}" && tmux switch-client -t "${sessionName}" || tmux switch-client -t "${sessionName}"
   elif [ "${input1}" = "n" ]; then
     clear
     echo "Okay, you can stay here."
