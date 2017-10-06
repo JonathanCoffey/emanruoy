@@ -19,25 +19,18 @@ status=$(tmux ls 2>/dev/null | grep "${sessionName}" >/dev/null; echo $?) # chec
 
 if [ ! "${TMUX}" ]; then # TMUX variable only exists in tmux. The test is saying: if not true, then... but if it is true, then this is false and goes to ELSE. 
   if [ "${status}" = 0 ]; then # if 0, then the chosen tmux session is already up.
+    tmux detach -s "${sessionName}"
+    tmux a -t "${sessionName}"
     clear
-    if [ "${status}" = 0 ]; then
-      tmux detach -s "${sessionName}"
-      tmux a -t "${sessionName}"
-      clear
-    else
-      tmux a -t "${sessionName}"
-      clear
-      exit
-    fi
   else
     tmux new-session -s "${sessionName}" \; set mouse on 2>/dev/null \;
-    clear
-    exit
+    tmux a -t "${sessionName}"
   fi
 else
   read -p 'Switch sessions? Y/n ' input1
   if [ "${input1}" = "y" ]; then
     clear
+    tmux detach -s "${sessionName}" 2>/dev/null
     tmux new-session -d -s "${sessionName}" \; set mouse on 2>/dev/null \; && tmux switch-client -t "${sessionName}" || tmux switch-client -t "${sessionName}"
   elif [ "${input1}" = "n" ]; then
     clear
@@ -55,3 +48,6 @@ else
     clear
   fi
 fi
+
+
+# Make option to NOT disconnect users when switching. 
